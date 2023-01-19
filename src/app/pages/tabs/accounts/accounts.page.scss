@@ -1,0 +1,22 @@
+.accounts-list {
+  margin: 8px;
+
+  .account-card {
+    background: var(--ion-color-tertiary);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 12vh;
+    justify-content: center;
+    ion-button {
+      --border-radius: 15px;
+    }
+    ion-label {
+      font-size: 1rem;
+    }
+  }
+  .new-card {
+    background: var(--ion-color-light);
+  }
+}

@@ -1,0 +1,106 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Accounts</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-row class="accounts-list">
+    <ng-container *ngIf="accounts?.length > 0">
+      <ion-col size="6" *ngFor="let account of accounts">
+        <div class="account-card">
+          <ion-button
+            slot="icon-only"
+            color="warning"
+            (click)="onEdit(account)"
+          >
+            <!-- <ion-icon [name]="account?.icon"></ion-icon> -->
+            <ion-label>{{account?.balance | currency:'INR'}}</ion-label>
+          </ion-button>
+          <ion-label>{{account?.name}}</ion-label>
+        </div>
+      </ion-col>
+    </ng-container>
+
+    <ion-col size="6">
+      <div class="account-card new-card">
+        <ion-button slot="icon-only" color="light" id="open-modal">
+          <ion-icon name="add-circle"></ion-icon>
+        </ion-button>
+        <ion-label>Add</ion-label>
+      </div>
+    </ion-col>
+  </ion-row>
+  <ion-modal trigger="open-modal" (willDismiss)="onWillDismiss($event)">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>New Account</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <form [formGroup]="accountForm" formGR>
+          <ion-item>
+            <ion-label position="stacked">Enter account name</ion-label>
+            <ion-input
+              type="text"
+              formControlName="name"
+              placeholder="Name"
+            ></ion-input>
+            <p
+              class="input-error-msg"
+              *ngIf="!accountForm.get('name').valid && accountForm.get('name').touched &&
+                accountForm.get('name').hasError"
+            >
+              Enter account name
+            </p>
+          </ion-item>
+          <!-- <ion-item>
+            <ion-label position="stacked">Enter Amonut(₹)</ion-label>
+            <ion-input
+              type="number"
+              formControlName="totalBalance"
+              placeholder="Balance"
+            ></ion-input>
+            <p
+              class="input-error-msg"
+              *ngIf="!accountForm.get('totalBalance').valid && accountForm.get('totalBalance').touched &&
+                accountForm.get('totalBalance').hasError"
+            >
+              Enter account balance
+            </p>
+          </ion-item> -->
+
+          <ion-row>
+            <ion-col size="6">
+              <ion-button
+                (click)="cancel()"
+                expand="block"
+                color="warning"
+                [strong]="true"
+                >Close</ion-button
+              >
+            </ion-col>
+            <ion-col size="6">
+              <ion-button
+                (click)="confirm()"
+                expand="block"
+                color="success"
+                [strong]="true"
+                >Save</ion-button
+              >
+            </ion-col>
+          </ion-row>
+          <ion-button
+            (click)="onDelete()"
+            *ngIf="editingAcc"
+            expand="block"
+            color="danger"
+            [strong]="true"
+            >Delete</ion-button
+          >
+        </form>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+</ion-content>
